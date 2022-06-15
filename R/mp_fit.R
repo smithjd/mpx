@@ -1,25 +1,14 @@
-#' Extend median polish output
-#'
-#' @param long_df
-#' @param measure
-#' @param row_name
-#' @param col_name
-#'
-#' @return lp
-#' @export
-#'
-#' @examples
 mp_fit <- function(long_df, measure, row_name, col_name) {
   my_df <- long_df
-  my_measure <- my_df %>% select({{measure}}) %>% unlist()
-  my_row_name <- my_df %>% select({{row_name}}) %>% unique() %>% unlist()
-  my_col_name <- my_df %>% select({{col_name}}) %>% unique() %>% unlist()
-  my_row_length <- my_row_name %>% unlist() %>% length()
-  my_col_length <- my_col_name %>% unlist() %>% length()
+  my_measure <- my_df |> select({{measure}}) |> unlist()
+  my_row_name <- my_df |> select({{row_name}}) |> unique() |> unlist()
+  my_col_name <- my_df |> select({{col_name}}) |> unique() |> unlist()
+  my_row_length <- my_row_name |> unlist() |> length()
+  my_col_length <- my_col_name |> unlist() |> length()
   my_array <- array(my_measure, c(my_row_length, my_col_length),
                     dimnames = list(my_row_name, my_col_name))
 
-  lp <- medpolish(my_array)
+  lp <- stats::medpolish(my_array)
 
   lp_row_tibble <- tibble(columns = my_row_name)
   fit <- as_tibble(lp$overall + outer(lp$row, lp$col, "+"))
@@ -42,7 +31,7 @@ mp_fit <- function(long_df, measure, row_name, col_name) {
                            names_repair = "unique"
   )
 
-  long_resid <- residuals %>%
+  long_resid <- residuals |>
     pivot_longer(
       cols = names(lp$col), names_to = "treat",
       values_to = "resids"
@@ -67,7 +56,7 @@ mp_fit <- function(long_df, measure, row_name, col_name) {
 
   table_length <- length(lp$row) * length(lp$col)
 
-  long_fit_resids <- long_fit_resids %>%
+  long_fit_resids <- long_fit_resids |>
     mutate(
       sign = ifelse(resids >= 0, 1, -1),
       seg_length = sqrt((resids**2) / 2),
@@ -77,7 +66,7 @@ mp_fit <- function(long_df, measure, row_name, col_name) {
       row_grid_end = rep(max_row_fit, table_length),
       col_grid_start = rep(min_col_fit, table_length),
       col_grid_end = rep(max_col_fit, table_length),
-    ) %>%
+    ) |>
     select(-sign)
 
   row_label_tibble <- tibble(
