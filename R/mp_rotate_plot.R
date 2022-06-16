@@ -1,4 +1,4 @@
-mp_plot <- function(expanded_lp_list){
+mp_rotate_plot <- function(expanded_lp_list){
   lp <- expanded_lp_list
   p <- lp$long_fit_resids %>%
     mutate(resid_color = case_when(
