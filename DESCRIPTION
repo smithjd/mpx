@@ -2,10 +2,9 @@ Package: mpx
 Type: Package
 Title: Extend medpolish
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Author: John David Smith
+Maintainer: John David Smith <john.smith@learningallianaces.net>
+Description: fits a median polish model and plots the output
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -15,6 +14,7 @@ Imports:
     dplyr,
     ggplotify,
     grid,
-    stats
+    stats,
+    ggplot2
 URL: https://github.com/smithjd/mpx
 BugReports: https://github.com/smithjd/mpx/issues

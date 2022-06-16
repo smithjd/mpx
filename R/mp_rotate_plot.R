@@ -1,47 +1,33 @@
 #' mp_rotate_plot
 #'
-#' @param expanded_lp_list
+#' @param expanded_lp_list a ggplot glob produced by the mp_plot function
 #'
-#' @return
-#' @export
+#' @return vp
+#' @export mp_rotate_plot
 #'
-#' @examples
+#' @examples mp_rotate_plot(expanded_lp_list)
 mp_rotate_plot <- function(expanded_lp_list){
-  lp <- expanded_lp_list
-  p <- lp$long_fit_resids %>%
-    mutate(resid_color = case_when(
-      resids < 0 ~ "red",
-      TRUE ~ "blue"
-    )) %>%
-    ggplot(aes(x = col_fit, y = row_fit)) +
-    # geom_point() +
-    geom_segment(aes(y = row_grid_start, x = col_fit, yend = row_grid_end, xend =   col_fit)) +
-    geom_segment(aes(y = row_fit, x = col_grid_start, xend = col_grid_end, yend =   row_fit)) +
-    coord_fixed(ratio = 1) +
-    geom_segment(aes(
-      x = col_fit, y = row_fit,
-      xend = col_fit_end, yend = row_fit_end,
-      color = resid_color
-    ),
-    arrow = arrow(type = "closed", length = unit(.1, "cm"))
-    ) +
-    geom_text(
-      data = lp$col_label_tibble,
-      aes(col_label_x, col_label_y,
-          label = col_label_label
-      ),
-      angle = -45,
-      nudge_y = -20
-    ) +
-    geom_text(
-      data = lp$row_label_tibble,
-      aes(row_label_y, row_label_x,
-          label = row_label_label
-      ),
-      angle = -45,
-      nudge_x = 20
-    ) +
-    labs(fill = NULL)
+  rotation <- 45
+  p_rot <- expanded_lp_list +
+    ggplot2::theme(
+      legend.position = "none",
+      axis.title.y = ggplot2::element_text(angle = -90)
+    )
+  grid::grid.newpage()
 
-  p
+  vp <- grid::viewport(name = "rotate", angle = rotation, width = 0.7, height = 0.7)
+  grid::pushViewport(vp)
+  print(p_rot, vp = "rotate", newpage = FALSE)
+
+  ## Warning in grid.Call.graphics(C_setviewport, vp, TRUE): cannot clip to rotated
+  ## viewport
+
+  ## Warning in grid.Call.graphics(C_setviewport, vp, TRUE): cannot clip to rotated
+  ## viewport
+
+  vp <- grid::viewport(
+    x = 0.15, y = 0.8, width = 0,
+    height = 0
+  )
+# vp <- pushViewport(vp)
 }

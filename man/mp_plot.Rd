@@ -7,8 +7,16 @@
 mp_plot(expanded_lp_list)
 }
 \arguments{
-\item{expanded_lp_list}{}
+\item{expanded_lp_list}{augmented output from medpolish returned from the mp_fit function}
+}
+\value{
+p
+
+The dataframe with new mean and sum columns
 }
 \description{
 plot expanded medpol output from mp_fit
+}
+\examples{
+mp_plot(expanded_lp_list)
 }
