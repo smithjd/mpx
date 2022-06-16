@@ -44,4 +44,5 @@ mp_plot <- function(expanded_lp_list){
     labs(fill = NULL)
 
   p$lp$long_fit_resids <- lp$long_fit_resids
+  p
 }
