@@ -1,3 +1,11 @@
+#' mp_rotate_plot
+#'
+#' @param expanded_lp_list
+#'
+#' @return
+#' @export
+#'
+#' @examples
 mp_rotate_plot <- function(expanded_lp_list){
   lp <- expanded_lp_list
   p <- lp$long_fit_resids %>%

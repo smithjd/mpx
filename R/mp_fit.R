@@ -1,3 +1,14 @@
+#' Title
+#'
+#' @param long_df
+#' @param measure
+#' @param row_name
+#' @param col_name
+#'
+#' @return
+#' @export
+#'
+#' @examples
 mp_fit <- function(long_df, measure, row_name, col_name) {
   my_df <- long_df
   my_measure <- my_df |> select({{measure}}) |> unlist()
